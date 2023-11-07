@@ -1,4 +1,14 @@
-.App {
+.home-banner {
+  background-image: url('../public/images/Banner.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 575px;
+  /* height: 100vh; */
+}
+
+
+/* .App {
   text-align: center;
 }
 
@@ -36,4 +46,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

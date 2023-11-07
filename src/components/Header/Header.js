@@ -13,8 +13,12 @@ const Header = () => {
       <div className="bg-body-tertiary">
         <nav className="bg-gray-800 h-14 p-4 flex items-center justify-between">
           <div className="container mx-auto flex items-center justify-between">
-            <a className="my-auto" href="/home">
-              <img src="./images/Rectangle.png" alt="rect" className="w-28 h-5" />
+            <a className="my-auto" href="/">
+              <img
+                src="./images/Rectangle.png"
+                alt="rect"
+                className="w-28 h-5"
+              />
             </a>
             <p className="text-white text-sm ml-4">
               Download eHisaab now to maintain your business accounts and get
@@ -28,11 +32,13 @@ const Header = () => {
           <div className="container mx-auto xl:w-[1366px]">
             <div className=" container mx-auto flex flex-row justify-between lg:flex-none ">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full xl:pc-[95px]">
-                <img
-                  src="./images/logoMain.png"
-                  alt=""
-                  className=" w-[55px] h-[55px] lg:w-[unset] lg:h-10"
-                />
+                <a href="/">
+                  <img
+                    src="./images/logoMain.png"
+                    alt=""
+                    className=" w-[55px] h-[55px] lg:w-[unset] lg:h-10"
+                  />
+                </a>
 
                 <div
                   className={`${
