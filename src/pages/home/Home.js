@@ -15,6 +15,7 @@ import {
 import ProductCard from "../../components/ProductCard";
 import AddRemoveQuantity from "../../components/AddRemoveQuantity";
 import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 const Home = (props) => {
   const { onAdd, onRemove, cartitems, setCartItems, element } = props;
@@ -105,6 +106,7 @@ const Home = (props) => {
           )}
         </div>
       </section>
+      <Footer />
     </>
   );
 };
