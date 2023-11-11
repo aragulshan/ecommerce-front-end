@@ -1,8 +1,24 @@
 import React from 'react'
 
+
 const Footer = () => {
   return (
-    <div>Footer</div>
+    
+<div className="bg-gray-200 py-0">
+      <div className="container mx-auto">
+        <div className="flex flex-row items-center justify-between p-2">
+          <div className="flex items-center">
+            <img className="me-5" src= "./images/footer.png " alt="" style={{ width: '121px', height: '46px' }} />
+            <img className="me-5" src="./images/footerimg.png " alt="" style={{ width: '127px', height: '45px' }} />
+          </div>
+          <div className="flex items-center justify-end">
+            <img className="me-5" src="./images/search.png " alt="" style={{ width: '21.86px', height: '21.86px' }} />
+            <img className="me-5" src="./images/search.png " alt="" style={{ width: '21.86px', height: '21.86px' }} />
+            <img className="me-5" src="./images/search.png " alt="" style={{ width: '21.86px', height: '21.86px' }} />
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 
