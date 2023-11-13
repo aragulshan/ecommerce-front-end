@@ -1,19 +1,20 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { updateQuantity } from "../redux/slices/addRemoveSlice";
+// import { updateQuantity } from "../redux/slices/addRemoveSlice";
+import { decreaseQuantity, increaseQuantity } from "../redux/slices/addToCart";
 
-const AddRemoveQuantity = ({ product, increaseQuantity, decreaseQuantity, quantityInCart }) => {
+const AddRemoveQuantity = ({ product, quantityInCart }) => {
   const dispatch = useDispatch();
   const [localQuantity, setLocalQuantity] = useState(quantityInCart);
 
   const handleIncrease = () => {
-    increaseQuantity();
+    dispatch(increaseQuantity(product.id));
     console.log(setLocalQuantity(localQuantity + 1)); // Update the local quantity
   };
 
   const handleDecrease = () => {
-    if (localQuantity > 0) {
-      decreaseQuantity();
+    if (localQuantity > 1) {
+      dispatch(decreaseQuantity(product.id));
       setLocalQuantity(localQuantity - 1); // Update the local quantity
     }
   };
@@ -23,14 +24,14 @@ const AddRemoveQuantity = ({ product, increaseQuantity, decreaseQuantity, quanti
       <img
         src="./images/addbtn.svg"
         alt="add"
-        className="w-[16px] h-[16px] m-auto"
+        className="w-[16px] h-[16px] m-auto cursor-pointer"
         onClick={handleIncrease}
       />
       <p className="self-center px-2">{`  ${localQuantity}`}</p>
       <img
         src="./images/removebtn.svg"
         alt="remove"
-        className="w-[16px] h-[16px] m-auto"
+        className="w-[16px] h-[16px] m-auto cursor-pointer"
         onClick={handleDecrease}
       />
     </div>
@@ -38,42 +39,3 @@ const AddRemoveQuantity = ({ product, increaseQuantity, decreaseQuantity, quanti
 };
 
 export default AddRemoveQuantity;
-
-
-
-
-
-// import React, { useState } from "react";
-// import { useSelector } from "react-redux";
-// import { updateQuantity } from "../redux/slices/addRemoveSlice";
-
-// const AddRemoveQuantity = ({ product,increaseQuantity, decreaseQuantity,quantityInCart }) => {
-
-//   // const cartItem = cart.items.find((item) => item.item.id === product.id);
-
-//   // // Get the quantity from the cartItem or default to 0 if not found
-//   // const quantityInCart = cartItem ? cartItem.quantity : 0;
-
-//   return (
-//     <div className="flex flex-row justify-between ">
-//     {/* <div className="flex flex-row w-[10%] justify-between "> */}
-//       <img
-//         src="./images/addbtn.svg"
-//         alt="add"
-//         className="w-[16px] h-[16px] m-auto"
-//         // onClick={() => setCount(count + 1)}
-//         onClick={increaseQuantity}
-//       />
-//       {/* <p className="self-center px-2">{cart}</p> */}
-//       <p className="self-center px-2">{`Quantity: ${quantityInCart}`}</p>
-//       <img
-//         src="./images/removebtn.svg"
-//         alt="remove"
-//         className="w-[16px] h-[16px] m-auto"
-//         onClick={decreaseQuantity}
-//       />
-//     </div>
-//   );
-// };
-
-// export default AddRemoveQuantity;

@@ -21,8 +21,8 @@ const ProductCard = ({ product }) => {
     console.log(cartitems, "amount from useEffect is:");
   }, [cartitems]);
 
-
-  const quantityInCart = cartitems.find(item => item.item.id === product.id)?.quantity || 0;
+  const quantityInCart =
+    cartitems.find((item) => item.id === product.id)?.quantity || 0;
 
   // const handleAddToCart = (product) => {
   //   dispatch(addToCart({ item: { id: product.id },quantity: quantityInCart + 1 }));
@@ -31,12 +31,14 @@ const ProductCard = ({ product }) => {
   //   setShowAddRemove(true);
   // };
   const handleAddToCart = (product) => {
-    const newQuantity = quantityInCart + 1; // Increment the quantity
-    dispatch(addToCart({ item: { id: product.id }, quantity: newQuantity }));
+    // const newQuantity = quantityInCart + 1; // Increment the quantity
+    // dispatch(addToCart({ item: { id: product.id, quantity: quantityInCart + 1 } }));
+    dispatch(addToCart(  {
+      ...product,
+      quantity: 1,
+    },));
     setShowAddRemove(true);
   };
-  
-
   return (
     <div className="bg-white rounded-lg shadow-md p-4 m-2">
       <img
