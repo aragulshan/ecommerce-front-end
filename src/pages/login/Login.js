@@ -2,14 +2,15 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React from "react";
 import { LoginSchema } from "../validation/LoginSchema";
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../../redux/slices/authenticationSlice";
+import { loginUser } from "../../redux/slices/authenticationSlice";
+// import { login } from "../../redux/slices/authenticationSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const { isLoading, error } = useSelector((state) => state.auth);
 
   const handleSubmit = (values) => {
-    dispatch(login(values));
+    dispatch(loginUser(values));
     console.log("login as", values);
   };
   return (

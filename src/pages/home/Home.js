@@ -18,13 +18,8 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 
 const Home = (props) => {
-  const { onAdd, onRemove, cartitems, setCartItems, element } = props;
   const dispatch = useDispatch();
-  // const products = useSelector((state) => state.products.products); //reducer key in store.state in clice
-  // const searchedProducts = useSelector((state) => state.search.products);
-
   const products = useSelector(selectAllProducts);
-  // const searchedProducts = useSelector(selectSearchedProducts);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategory] = useState("");
@@ -106,7 +101,6 @@ const Home = (props) => {
           )}
         </div>
       </section>
-      <Footer />
     </>
   );
 };

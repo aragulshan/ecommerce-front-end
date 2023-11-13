@@ -5,8 +5,9 @@ import registrationReducer from "./slices/registrationSlice";
 // import categoryReducer from "./slices/categorySlice"; // Import your categorySlice
 import priceReducer from "./slices/priceSlice";
 import productsReducer from "./slices/productsSlice"
-import quantityReducer from "./slices/addRemoveSlice"
+// import quantityReducer from "./slices/addRemoveSlice"
 import cartReducer from "./slices/addToCart"
+import orderReducer from "./slices/placeOrder"
 
 const store = configureStore({
   reducer: {
@@ -16,8 +17,9 @@ const store = configureStore({
     // category: categoryReducer,
     price: priceReducer,
     products: productsReducer,
-    quantity: quantityReducer,
+    // quantity: quantityReducer,
     cart: cartReducer,
+    order: orderReducer,
   },
 });
 

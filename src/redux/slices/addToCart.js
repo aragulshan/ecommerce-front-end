@@ -8,34 +8,37 @@ const cartSlice = createSlice({
   reducers: {
     addToCart: (state, action) => {
       const newItem = action.payload;
+      state.items.push(newItem);
 
-      if (newItem && newItem.item && newItem.item.id) {
-        const existingItemIndex = state.items.findIndex(
-          (item) => item?.item.id === newItem?.item.id
-        );
+      // if (newItem && newItem.item && newItem.item.id) {
+      //   const existingItemIndex = state.items.findIndex(
+      //     (item) => item?.item.id === newItem?.item.id
+      //   );
 
-        if (existingItemIndex !== -1) {
-          state.items[existingItemIndex].quantity += newItem.quantity;
-        } else {
-          state.items.push(newItem);
-        }
-      } else {
-        // Handle the case where newItem is not in the expected format
-        console.error("Invalid newItem:", newItem);
-      }
+      //   if (existingItemIndex !== -1) {
+      //     state.items[existingItemIndex].quantity += newItem.quantity;
+      //   } else {
+      //     state.items.push(newItem);
+      //   }
+      // } else {
+      //   // Handle the case where newItem is not in the expected format
+      //   console.error("Invalid newItem:", newItem);
+      // }
     },
     removeFromCart: (state, action) => {
-      state.items = state.items.filter((e) => e?.item.id !== action.payload);
-    },
+      const itemIdToRemove = action.payload;
+      state.items = state.items.filter((item) => item?.id !== itemIdToRemove);
+    },  
+    // removeFromCart: (state, action) => {
+    //   state.items = state.items.filter((e) => e?.item.id !== action.payload);
+    // },
     increaseQuantity: (state, action) => {
       state.items = state.items.map((item) => {
-        if (item?.item.id === action.payload) {
+        if (item?.id === action.payload) {
           return {
             ...item,
             quantity:
-              item?.item?.stock > item.quantity
-                ? item.quantity + 1
-                : item.quantity,
+              item?.stock > item.quantity ? item.quantity + 1 : item.quantity,
           };
         }
         return item;
@@ -43,10 +46,10 @@ const cartSlice = createSlice({
     },
     decreaseQuantity: (state, action) => {
       state.items = state.items.map((item) => {
-        if (item?.item.id === action.payload) {
+        if (item?.id === action.payload) {
           return {
             ...item,
-            quantity: item?.item?.stock > 0 ? item.quantity - 1 : item.quantity,
+            quantity: item?.stock > 0 ? item.quantity - 1 : item.quantity,
           };
         }
         return item;
