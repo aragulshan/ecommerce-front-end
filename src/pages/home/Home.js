@@ -56,7 +56,7 @@ const Home = (props) => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <section className="">
         <div className="home-banner" />
         <div className="flex flex-col lg:flex-row justify-between w-auto md:w-[776px] lg:w-[850px] xl:w-[1015px] mx-auto py-12 ">

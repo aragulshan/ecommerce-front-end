@@ -36,7 +36,7 @@ const StorePage = () => {
 
   return (
     <>
-      <Header />
+      {/* <Header /> */}
       <section className="px-[80px] ">
         <div className="flex flex-col xl:flex-row gap-[2rem] py-16 items-center lg:items-start ">
           <div className=" xl:flex-[1.5] w-[100%] lg:w-[760px] xl:w-[unset] ">

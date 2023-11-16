@@ -4,7 +4,7 @@ import axios from 'axios';
 export const register = createAsyncThunk('auth/register', async (userData, { rejectWithValue }) => {
   try {
     const response = await axios.post(
-      'http://localhost:8080/auth/register', // To replace this with my end-point
+      "http://localhost:8080/api/auth/register",
       userData
     );
 
@@ -29,16 +29,70 @@ const registrationSlice = createSlice({
           state.isLoading = true;
         })
         .addCase(register.fulfilled, (state, action) => {
+          console.log(action, 'registration action');
           state.isLoading = false;
-          state.user = action.payload;
-          state.error = null;
-          state.role = action.payload.role;
+          if (action.payload && action.payload.data) {
+            state.user = action.payload.data;
+            state.error = null;
+            state.role = action.payload.data.role;
+          } else {
+            console.error("Invalid response format:", action.payload);
+            state.user = null;
+            state.error = "Invalid response format"; // You can customize this error message
+            state.role = null;
+          }
         })
+        // .addCase(register.fulfilled, (state, action) => {
+        //   console.log(action, 'registration action');
+        //   state.isLoading = false;
+        //   if (action.payload && action.payload.data) {
+        //     state.user = action.payload.data;
+        //     state.error = null;
+        //     state.role = action.payload.data.role;
+        //   } else {
+        //     console.error("Invalid response format:", action.payload);
+        //     state.user = null;
+        //     state.error = "Invalid response format"; // You can customize this error message
+        //     state.role = null;
+        //   }
+        // })
+        // .addCase(register.fulfilled, (state, action) => {
+        //   console.log(action,'registration action')
+        //   state.isLoading = false;
+        //   if (action.payload && action.payload.data) {
+        //     state.user = action.payload.data;
+        //     state.error = null;
+        //     state.role = action.payload.data.role;
+        //   } else {
+        //     state.user = null;
+        //     state.error = "Invalid response format"; // You can customize this error message
+        //     state.role = null;
+        //   }
+        // })
         .addCase(register.rejected, (state, action) => {
+          console.error("Registration rejected:", action);
           state.isLoading = false;
           state.user = null;
           state.error = action.error.message;
+          state.role = null;
         });
+        // .addCase(register.fulfilled, (state, action) => {
+        //   state.isLoading = false;
+        //   state.user = action.payload;
+        //   state.error = null;
+        //   state.role = action.payload.role;
+        // })
+        // .addCase(register.rejected, (state, action) => {
+        //   console.error(action);
+        //   state.isLoading = false;
+        //   state.user = null;
+        //   state.error = action.error.message;
+        // });
+        // .addCase(register.rejected, (state, action) => {
+        //   state.isLoading = false;
+        //   state.user = null;
+        //   state.error = action.error.message;
+        // });
     },
   });
 

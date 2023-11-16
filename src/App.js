@@ -18,7 +18,7 @@ const App = () => {
 
   return (
     <Router>
-      <Header />
+      {/* <Header /> */}
       {auth.isAuthenticated && <Header />}
       <Routes>
         <Route
@@ -26,6 +26,7 @@ const App = () => {
           element={
             auth.isAuthenticated ? (
               auth.role === "admin" ? (
+                // <Dashboard />
                 <Navigate to="/dashboard" />
               ) : (
                 <Home />
@@ -36,6 +37,7 @@ const App = () => {
           }
         />
         <Route path="/member" element={<Member />} />
+        <Route path="/home" element={<Home />} />
         <Route path="/store" element={<StorePage />} />
         <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
@@ -44,9 +46,9 @@ const App = () => {
     </Router>
     //  <Router>
     //   <Routes>
-    //     <Route path="/" element={<Dashboard />} />
+    //     <Route path="/dashboard" element={<Dashboard />} />
     //     <Route path="/member" element={<Member />} />
-    //     <Route path="/home" element={<Home />} />
+    //     <Route path="/" element={<Home />} />
     //     <Route path="/store" element={<StorePage/>} />
     //   </Routes>
     //   {/* <Footer/> */}

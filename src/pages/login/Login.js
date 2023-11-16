@@ -23,7 +23,7 @@ const Login = () => {
         navigate('/home'); // Redirect to the customer home page
         // navigate.push('/home'); // Redirect to the customer home page
       } else if (role === 'admin') {
-        navigate('/admin'); // Redirect to the admin dashboard
+        navigate('/dashboard'); // Redirect to the admin dashboard
       }
     }
   }, [isAuthenticated, role, navigate]);
