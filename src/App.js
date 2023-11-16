@@ -5,45 +5,52 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
+import { useSelector } from "react-redux";
 import Home from "./pages/home/Home";
 import StorePage from "./pages/storepage/StorePage";
 import Member from "./pages/member/Member";
 import Footer from "./components/Footer/Footer";
-import { useSelector } from "react-redux";
 import Header from "./components/Header/Header";
-// import Login from "./pages/login/Login";
-// import Register from "./pages/register/Register";
+import Dashboard from "./pages/dashboard/Dashboard";
 
-const App = (props) => {
+const App = () => {
   const auth = useSelector((state) => state.auth);
 
   return (
     <Router>
+      <Header />
       {auth.isAuthenticated && <Header />}
       <Routes>
-        <Route path="/member" element={<Member />} />
         <Route
           path="/"
-          element={auth.isAuthenticated ? <Home /> : <Navigate to="/member" />}
-        />
-        <Route
-          path="/store"
           element={
-            auth.isAuthenticated ? <StorePage /> : <Navigate to="/member" />
+            auth.isAuthenticated ? (
+              auth.role === "admin" ? (
+                <Navigate to="/dashboard" />
+              ) : (
+                <Home />
+              )
+            ) : (
+              <Navigate to="/member" />
+            )
           }
         />
+        <Route path="/member" element={<Member />} />
+        <Route path="/store" element={<StorePage />} />
+        <Route path="/dashboard" element={<Dashboard />} />
       </Routes>
+      {/* <Footer /> */}
       {auth.isAuthenticated && <Footer />}
     </Router>
     //  <Router>
     //   <Routes>
+    //     <Route path="/" element={<Dashboard />} />
     //     <Route path="/member" element={<Member />} />
-    //     <Route path="/" element={<Home />} />
+    //     <Route path="/home" element={<Home />} />
     //     <Route path="/store" element={<StorePage/>} />
     //   </Routes>
-    //   <Footer/>
+    //   {/* <Footer/> */}
     // </Router>
-   
   );
 };
 

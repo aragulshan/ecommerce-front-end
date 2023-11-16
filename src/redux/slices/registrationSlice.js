@@ -20,6 +20,7 @@ const registrationSlice = createSlice({
       user: null,
       error: null,
       isLoading: false,
+      role: null,
     },
     reducers: {},
     extraReducers: (builder) => {
@@ -31,6 +32,7 @@ const registrationSlice = createSlice({
           state.isLoading = false;
           state.user = action.payload;
           state.error = null;
+          state.role = action.payload.role;
         })
         .addCase(register.rejected, (state, action) => {
           state.isLoading = false;

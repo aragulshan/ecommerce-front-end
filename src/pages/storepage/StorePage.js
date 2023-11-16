@@ -10,6 +10,7 @@ import {
 } from "../../redux/slices/addToCart";
 import orderSchema from "../validation/OrderSchema";
 import placeOrder from "../../redux/slices/placeOrder";
+import { sendPayment } from "../../redux/slices/paymentServiceSlice";
 
 const StorePage = () => {
   const dispatch = useDispatch();
@@ -20,19 +21,17 @@ const StorePage = () => {
   const isLoading = orderState.isLoading || false;
   const error = orderState.error || null;
   console.log(orderState, "is the state");
-  // const handleSubmit = (values) => {
-  //   console.log("Before dispatching placeOrder");
-  //   console.log(values);
-  //   dispatch(placeOrder(values));
-  //   console.log("After dispatching placeOrder");
-  //   console.log(values, "order form values are");
-  // };
+
+  const isLoadingOrder = orderState.isLoading || false;
+  const errorOrder = orderState.error || null;
+
   const handleSubmit = (values) => {
     console.log("Before dispatching placeOrder");
     console.log(values);
     dispatch(placeOrder(values));
     console.log("After dispatching placeOrder");
     console.log(values, "order form values are");
+    dispatch(sendPayment());
   };
 
   return (
@@ -195,6 +194,17 @@ const StorePage = () => {
                 </Form>
               </Formik>
               {error && <div className="text-red-500">{error}</div>}
+              <button
+                className="bg-blue-500 text-white font-bold py-2 px-4 w-full rounded mt-4 hover:bg-blue-600"
+                disabled={isLoadingOrder}
+                onClick={() => dispatch(sendPayment())}
+              >
+                {isLoadingOrder
+                  ? "Processing Payment..."
+                  : "Checkout with PayPal"}
+              </button>
+
+              {errorOrder && <div className="text-red-500">{errorOrder}</div>}
             </div>
           </div>
         </div>

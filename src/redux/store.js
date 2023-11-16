@@ -4,10 +4,13 @@ import registrationReducer from "./slices/registrationSlice";
 // import searchReducer from "./slices/searchSlice"; // Import your searchSlice
 // import categoryReducer from "./slices/categorySlice"; // Import your categorySlice
 import priceReducer from "./slices/priceSlice";
-import productsReducer from "./slices/productsSlice"
+import productsReducer from "./slices/productsSlice";
 // import quantityReducer from "./slices/addRemoveSlice"
-import cartReducer from "./slices/addToCart"
-import orderReducer from "./slices/placeOrder"
+import cartReducer from "./slices/addToCart";
+import orderReducer from "./slices/placeOrder";
+import paymentReducer from "./slices/paymentServiceSlice";
+import userReducer from "./slices/userSlice"
+import uploadProductReducer from "./slices/uploadProductSlice"
 
 const store = configureStore({
   reducer: {
@@ -20,6 +23,9 @@ const store = configureStore({
     // quantity: quantityReducer,
     cart: cartReducer,
     order: orderReducer,
+    payment: paymentReducer,
+    users: userReducer,
+    uploadProducts: uploadProductReducer,
   },
 });
 

@@ -23,6 +23,8 @@ const Register = () => {
           email: "",
           password: "",
           contact: "",
+          role:""
+          // role:"customer"
         }}
         validationSchema={registrationSchema}
         // onSubmit={(values) => {
@@ -96,6 +98,28 @@ const Register = () => {
           />
           <ErrorMessage
             name="contact"
+            component="div"
+            className="text-red-500 text-sm"
+          />
+          <label
+            className="block text-gray-700 text-sm font-bold pt-2 pb-1"
+            htmlFor="role"
+          >
+            Role
+          </label>
+          <Field
+            as="select"
+            className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
+            id="role"
+            name="role"
+          >
+            <option value="customer">Customer</option>
+            <option value="seller">Seller</option>
+            <option value="admin">Admin</option>
+            {/* Add more roles as needed */}
+          </Field>
+          <ErrorMessage
+            name="role"
             component="div"
             className="text-red-500 text-sm"
           />

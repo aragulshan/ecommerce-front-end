@@ -24,12 +24,14 @@ const authSlice = createSlice({
   initialState: {
     user: null,
     isAuthenticated: false,
+    role:null,
     error: null,
     isLoading: false,
   },
   reducers: {
     logout: (state) => {
       state.isAuthenticated = false; // Set isAuthenticated to false on logout
+      state.role = null;
     },
   },
   extraReducers: (builder) => {
@@ -41,6 +43,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload;
         state.isAuthenticated = true; // Set isAuthenticated to true on successful login
+        state.role = action.payload.role;
         state.error = null;
       })
       .addCase(loginUser.rejected, (state, action) => {
@@ -50,6 +53,7 @@ const authSlice = createSlice({
       })
       .addCase(authSlice.actions.logout, (state) => {
         state.isAuthenticated = false; // Set isAuthenticated to false using the logout action
+        state.role = null; //clear role on logout
       });
   },
 });

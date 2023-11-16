@@ -11,4 +11,5 @@ export const registrationSchema = Yup.object().shape({
   contact: Yup.string()
     .matches(/^\d{10}$/, "Invalid phone number format (10 digits)")
     .required("Contact Number is required"),
+  role: Yup.string().required("Role is required"),
 });
