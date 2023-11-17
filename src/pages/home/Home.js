@@ -10,50 +10,57 @@ import {
 import { searchByPriceRange } from "../../redux/slices/priceSlice";
 import {
   fetchProducts,
-  selectAllProducts,
+  // selectAllProducts,
 } from "../../redux/slices/productsSlice";
 import ProductCard from "../../components/ProductCard";
 import AddRemoveQuantity from "../../components/AddRemoveQuantity";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import getCurrentUserData from "../../Utils/FetchCurrentUserData";
 
 const Home = (props) => {
   const dispatch = useDispatch();
-  const products = useSelector(selectAllProducts);
+  const products = useSelector((state) => state.products.products);
+
+  const userData = getCurrentUserData();
 
   const [searchQuery, setSearchQuery] = useState("");
   const [categories, setCategory] = useState("");
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(0);
-  const [localProducts, setLocalProducts] = useState(products);
+  // const [localProducts, setLocalProducts] = useState(products);
+  const [localProducts, setLocalProducts] = useState([]);
 
   const handleProductSearch = (e) => {
-    const query = e.target.value;
+    const query = e?.target?.value;
     setSearchQuery(query);
-    dispatch(searchProducts(query));
-    console.log(query, "queried products");
+   
   };
 
   useEffect(() => {
-    setLocalProducts(products);
-    console.log(products, "heree");
+    // Dispatch the fetchProducts action
+    dispatch(searchProducts(searchQuery));
+    // dispatch(fetchProducts());
+  }, [searchQuery]);
+
+  useEffect(() => {
+    // Update localProducts once the products state is populated
+    if (products && products.length > 0) {
+      setLocalProducts(products);
+    }
   }, [products]);
+  
+const productss = useSelector((state)=>state);
 
   const handleCategorySearch = (e) => {
     const category = e.target.value;
     setCategory(category);
     dispatch(searchByCategory(category));
-    console.log(category, "your categories are:");
   };
 
-  const handlePriceSearch = () => {
-    dispatch(searchByPriceRange(minPrice, maxPrice));
-  };
-
-  useEffect(() => {
-    dispatch(fetchProducts());
-  }, [dispatch]);
-
+  // const handlePriceSearch = () => {
+  //   dispatch(searchByPriceRange(minPrice, maxPrice));
+  // };
   return (
     <>
       {/* <Header /> */}
@@ -72,7 +79,7 @@ const Home = (props) => {
             value={categories}
             onChange={handleCategorySearch}
           />
-          <SearchInput
+          {/* <SearchInput
             placeholder="Min Price - Max Price"
             showIcon={true}
             value={`${minPrice} - ${maxPrice}`}
@@ -82,14 +89,14 @@ const Home = (props) => {
               setMaxPrice(max);
             }}
             onSearch={handlePriceSearch}
-          />
+          /> */}
         </div>
         <div className="flex flex-wrap md:w-[776px] lg:w-[850px] xl:w-[1015px] mx-auto py-12 ">
           {localProducts.length > 0 ? (
             localProducts?.map((product) => {
               return (
                 <div
-                  key={product.id}
+                  key={product._id}
                   className="w-full sm:w-1/2 md:w-1/3 lg:w-[33.3%] px-4 mb-4"
                 >
                   <ProductCard product={product} />

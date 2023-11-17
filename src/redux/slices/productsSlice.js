@@ -1,31 +1,49 @@
 // productSlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
+import axios from "axios";
 
 // Create an async thunk for fetching products
 export const fetchProducts = createAsyncThunk(
   "products/fetchProducts",
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get("https://dummyjson.com/products"); // to replace it with my own api
+      const response = await axios.get(
+        "http://localhost:8080/api/product/all-products"
+      );
 
-      return response.data.products; // Assuming that the products are nested under the "products" property
+
+      return response.data.allproducts;
+      // return response.data.products;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
+// export const searchProducts = createAsyncThunk(
+//   "search/searchProducts",
+//   async (searchQuery, { rejectWithValue }) => {
+//     const apiUrl = `http://localhost:8080/api/product/product-brand/search?q=${searchQuery}`;
+
+//     try {
+//       const response = await axios.get(apiUrl);
+//       return response.data.allproducts;
+//     } catch (error) {
+//       return rejectWithValue(error.response.data);
+//     }
+//   }
+// );
+
 export const searchProducts = createAsyncThunk(
   "search/searchProducts",
   async (searchQuery, { rejectWithValue }) => {
     try {
       const response = await axios.get(
-        `https://dummyjson.com/products/search?q=${searchQuery}` //to replace with my actual api
-        // `http://localhost:8080/api/products?search=${searchQuery}` //to replace with my actual api
+        `http://localhost:8080/api/product/all-products?q=${searchQuery}` 
+        // `https://dummyjson.com/products/search?q=${searchQuery}` //to replace with my actual api
       );
-
-      return response.data;
+      // return response.data;
+      return response.data.allproducts;
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -58,35 +76,35 @@ const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProducts.pending, (state) => {
-        state.isLoading = true;
-        state.error = null;
-      })
-      .addCase(fetchProducts.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.products = action.payload;
-        state.error = null;
-      })
-      .addCase(fetchProducts.rejected, (state, action) => {
-        state.isLoading = false;
-        state.products = [];
-        state.error = action.error.message;
-      })
-      .addCase(searchProducts.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.products = action.payload?.products;
-        state.error = null;
-      })
-      .addCase(searchByCategory.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.products = action.payload?.products;
-        state.error = null;
-      })
+    .addCase(searchProducts.pending, (state) => {
+      state.isLoading = true;
+      state.error = null;
+    })
+    .addCase(searchProducts.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.products = action.payload || [];
+      state.error = null;
+    })
+    .addCase(searchProducts.rejected, (state, action) => {
+      state.isLoading = false;
+      state.products = [];
+      state.error = action.payload?.error || "An error occurred";
+    })
+    // .addCase(searchProducts.fulfilled, (state, action) => {
+    //   state.isLoading = false;
+    //   state.products = action.payload || [];
+    //   // state.products = action.payload?.products;
+    //   state.error = null;
+    // })
+    .addCase(searchByCategory.fulfilled, (state, action) => {
+      state.isLoading = false;
+      state.products = action.payload?.products;
+      state.error = null;
+    });
   },
 });
 export const selectAllProducts = (state) => state.products.products;
 
-export default productSlice.reducer;
 
-// export default productSlice.reducer;
+export default productSlice.reducer;
 

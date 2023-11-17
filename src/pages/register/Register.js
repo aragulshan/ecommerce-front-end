@@ -13,7 +13,6 @@ const Register = () => {
 
   const handleSubmit = (values) => {
     dispatch(register(values));
-    console.log(values, "form values are");
     
     
   };

@@ -1,5 +1,4 @@
-import React from "react";
-import Header from "../../components/Header/Header";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ErrorMessage, Formik, Field, Form } from "formik";
 import AddRemoveQuantity from "../../components/AddRemoveQuantity";
@@ -9,46 +8,40 @@ import {
   removeFromCart,
 } from "../../redux/slices/addToCart";
 import orderSchema from "../validation/OrderSchema";
-import placeOrder from "../../redux/slices/placeOrder";
+// import placeOrder from "../../redux/slices/placeOrder";
 import { sendPayment } from "../../redux/slices/paymentServiceSlice";
 
 const StorePage = () => {
   const dispatch = useDispatch();
+  const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const cartitems = useSelector((state) => state.cart.items);
-  console.log(cartitems, "on store page");
 
   const orderState = useSelector((state) => state.order);
   const isLoading = orderState.isLoading || false;
   const error = orderState.error || null;
-  console.log(orderState, "is the state");
 
   const isLoadingOrder = orderState.isLoading || false;
   const errorOrder = orderState.error || null;
 
   const handleSubmit = (values) => {
-    console.log("Before dispatching placeOrder");
-    console.log(values);
-    dispatch(placeOrder(values));
-    console.log("After dispatching placeOrder");
-    console.log(values, "order form values are");
-    dispatch(sendPayment());
+    // dispatch(placeOrder(values));
+    // dispatch(sendPayment());
+    setIsSubmitSuccess(true);
   };
-
   return (
     <>
-      {/* <Header /> */}
       <section className="px-[80px] ">
-        <div className="flex flex-col xl:flex-row gap-[2rem] py-16 items-center lg:items-start ">
+        <div className="flex flex-col xl:flex-row gap-[2rem] relative top-14 items-center lg:items-start ">
           <div className=" xl:flex-[1.5] w-[100%] lg:w-[760px] xl:w-[unset] ">
             {cartitems?.map((element) => (
               <div
                 className="bg-[#FBFBFB] shadow-xl rounded mb-[2rem] h-[234px]"
-                key={element.id}
+                key={element._id}
               >
                 <div className=" py-8 px-10 flex">
                   <div className="lg:w-[525px] flex ">
                     <img
-                      src={element.thumbnail}
+                      src={element.imageUrl}
                       alt=""
                       className="w-[82.35px] h-[78.35px]"
                     />
@@ -65,10 +58,10 @@ const StorePage = () => {
                     <AddRemoveQuantity
                       product={element}
                       increaseQuantity={() =>
-                        dispatch(increaseQuantity(element.id))
+                        dispatch(increaseQuantity(element._id))
                       }
                       decreaseQuantity={() =>
-                        dispatch(decreaseQuantity(element.id))
+                        dispatch(decreaseQuantity(element._id))
                       }
                       quantityInCart={element.quantity}
                     />
@@ -76,7 +69,10 @@ const StorePage = () => {
                       src="./images/delete.svg"
                       alt="del"
                       className="w-[16.47px] h-[17.63px] self-center my-[1rem] cursor-pointer"
-                      onClick={() => dispatch(removeFromCart(element.id))}
+                      onClick={() => {
+                        console.log(element, "elementer");
+                        dispatch(removeFromCart(element._id));
+                      }}
                     />
                   </div>
                 </div>
@@ -188,8 +184,13 @@ const StorePage = () => {
                       className="bg-gray-700 text-white font-bold py-2 px-4 w-full rounded hover:bg-gray-600"
                       disabled={isLoading}
                     >
-                      {isLoading ? "Placing Order..." : "Place Order (COD)"}
+                      {isLoading ? "Submitting..." : "User Info"}
                     </button>
+                    {isSubmitSuccess && (
+                      <div className="text-green-500 mt-2">
+                        User information submitted successfully!
+                      </div>
+                    )}
                   </div>
                 </Form>
               </Formik>
@@ -197,11 +198,19 @@ const StorePage = () => {
               <button
                 className="bg-blue-500 text-white font-bold py-2 px-4 w-full rounded mt-4 hover:bg-blue-600"
                 disabled={isLoadingOrder}
-                onClick={() => dispatch(sendPayment())}
+                onClick={() => {
+                  const formattedCartItems = cartitems.map((cartData) => ({
+                    productId: {
+                      productName: cartData.brand,
+                      imageUrl: cartData.imageUrl,
+                      price: cartData.price,
+                    },
+                    quantity: cartData.quantity,
+                  }));
+                  dispatch(sendPayment(formattedCartItems));
+                }}
               >
-                {isLoadingOrder
-                  ? "Processing Payment..."
-                  : "Checkout with PayPal"}
+                {isLoadingOrder ? "Processing Payment..." : "Checkout"}
               </button>
 
               {errorOrder && <div className="text-red-500">{errorOrder}</div>}

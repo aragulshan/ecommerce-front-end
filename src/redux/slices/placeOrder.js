@@ -5,12 +5,10 @@ export const placeOrder = createAsyncThunk(
   "order/placeOrder",
   async (orderData, { rejectWithValue }) => {
     try {
-      console.log("Order data:", orderData); // Log order data
       const response = await axios.post(
         "https://jsonplaceholder.typicode.com/posts",
         orderData
       );
-      console.log("Response:", response.data); // Log response data
       return response.data;
     } catch (error) {
       console.error("Error:", error); // Log the error

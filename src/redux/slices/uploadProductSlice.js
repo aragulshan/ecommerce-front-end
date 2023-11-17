@@ -1,78 +1,65 @@
-// redux/productSlice.js
-import { createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
-// Create an async thunk for adding products
-export const addProductAsync = (productData) => async (dispatch) => {
+// Define the async thunk for creating a product
+export const createProduct = createAsyncThunk('product/createProduct', async (productData, { rejectWithValue }) => {
   try {
-    // Create FormData for file upload
-    const formData = new FormData();
-    formData.append("title", productData.title);
-    formData.append("description", productData.description);
-    formData.append("price", productData.price);
-    formData.append("discountPercentage", productData.discountPercentage);
-    formData.append("rating", productData.rating);
-    formData.append("stock", productData.stock);
-    formData.append("brand", productData.brand);
-    formData.append("category", productData.category);
-    formData.append("thumbnail", productData.thumbnail);
-    formData.append("images", productData.images.join(","));
+    // Fetch the category based on the category name
+    const categoryResponse = await axios.get(
+      `http://localhost:8080/api/category/get-category?q=${productData.category}`
+    );
 
-    // Make the API request
-    const response = await axios.post("/api/products", formData, { //replace with my api
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-    });
+    // Extract the categoryId from the response
+    const categoryId = categoryResponse.data.categories._id;
 
-    // Dispatch the addProduct action with the response data
-    dispatch(addProduct(response.data));
+    // Update the productData with the categoryId
+    const updatedProductData = { ...productData, category: categoryId };
+
+    // Now, make the request to create the product with the updated data
+    const response = await axios.post(
+      "http://localhost:8080/api/product/create-product",
+      updatedProductData
+    );
+
+    return response.data;
   } catch (error) {
-    // Handle errors
-    console.error("Error adding product:", error);
+    return rejectWithValue(error.response.data);
   }
-};
+});
 
-const productSlice = createSlice({
-  name: "products",
+// Create a slice for product creation
+const productCreationSlice = createSlice({
+  name: 'productCreation',
   initialState: {
-    products: [],
+    product: null,
     error: null,
     isLoading: false,
   },
-  reducers: {
-    addProduct: (state, action) => {
-      state.products.push(action.payload);
-    },
-    // Add more reducers as needed
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(createProduct.pending, (state) => {
+        state.isLoading = true;
+      })
+      .addCase(createProduct.fulfilled, (state, action) => {
+        state.isLoading = false;
+        if (action.payload && action.payload.data) {
+          state.product = action.payload.data;
+          state.error = null;
+        } else {
+          console.error("Invalid response format:", action.payload);
+          state.product = null;
+          state.error = "Invalid response format"; // You can customize this error message
+        }
+      })
+      .addCase(createProduct.rejected, (state, action) => {
+        console.error("Product creation rejected:", action);
+        state.isLoading = false;
+        state.product = null;
+        state.error = action.error.message;
+      });
   },
 });
 
-export const { addProduct } = productSlice.actions;
-export const selectAllProducts = (state) => state.products.products;
+export default productCreationSlice.reducer;
 
-export default productSlice.reducer;
-
-
-// // redux/productSlice.js
-// import { createSlice } from "@reduxjs/toolkit";
-
-// const uploadProductSlice = createSlice({
-//   name: "products",
-//   initialState: {
-//     products: [],
-//     error: null,
-//     isLoading: false,
-//   },
-//   reducers: {
-//     addProduct: (state, action) => {
-//       state.products.push(action.payload);
-//     },
-//     // Add more reducers as needed
-//   },
-// });
-
-// export const { addProduct } = uploadProductSlice.actions;
-// export const selectAllProducts = (state) => state.products.products;
-
-// export default uploadProductSlice.reducer;

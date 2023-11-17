@@ -1,9 +1,24 @@
-import React from 'react'
+import React from "react";
+import { Link } from "react-router-dom";
 
 const ThankYouCard = () => {
   return (
-    <div>ThankYouCard</div>
-  )
-}
+    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8 text-center mt-[8rem]">
+      <img
+        src="./images/thankyou.png"
+        alt="Thank You"
+        className="w-full h-auto mb-4 rounded-lg shadow-md"
+      />
+      <p className="text-lg font-bold mb-2">Thank You!</p>
+      <p className="text-md mb-4">Keep Shopping!</p>
+      {/* <button className="bg-gray-700 text-white font-bold py-2 px-4  rounded hover:bg-gray-600">
+        Continue Shopping 
+      </button> */}
+      <Link to="/home" className="bg-gray-700 text-white font-bold py-2 px-4  rounded hover:bg-gray-600">
+        Continue Shopping
+      </Link>
+    </div>
+  );
+};
 
-export default ThankYouCard
+export default ThankYouCard;

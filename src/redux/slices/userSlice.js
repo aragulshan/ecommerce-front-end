@@ -6,72 +6,34 @@ export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (_, { rejectWithValue }) => {
     try {
+      console.log('djdfs')
       const response = await axios.get(
         "http://localhost:8080/api/auth/getallusers"
       ); 
-      return response.data.users; // Assuming that the users are nested under the "users" property
+      console.log(response.data,'usersss')
+      return response.data; // Assuming that the users are nested under the "users" property
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
   }
 );
 
-// const userSlice = createSlice({
-//   name: "users",
-//   initialState: {
-//     users: [],
-//     error: null,
-//     isLoading: false,
-//   },
-//   reducers: {},
-//   extraReducers: (builder) => {
-//     builder
-//       .addCase(fetchUsers.pending, (state) => {
-//         state.isLoading = true;
-//         state.error = null;
-//       })
-//       .addCase(fetchUsers.fulfilled, (state, action) => {
-//         state.isLoading = false;
-//         state.users = action.payload;
-//         state.error = null;
-//       })
-//       .addCase(fetchUsers.rejected, (state, action) => {
-//         state.isLoading = false;
-//         state.users = [];
-//         state.error = action.error.message;
-//       });
-//   },
-// });
 const userSlice = createSlice({
-  // name: "users",
-  // initialState: {
-  //   users: [], // Initialize users as an empty array
-  //   error: null,
-  //   isLoading: false,
-  // },
   name: "users",
   initialState: {
-    users: [], // Initialize users as an empty array
+    products: [],
+    currentUser:null,
     error: null,
     isLoading: false,
+    users:null
   },
-  reducers: {},
+  reducers: {
+    login: (state,action) => {
+      state.currentUser =  action.payload;
+    },
+  },
   extraReducers: (builder) => {
     builder
-      // .addCase(fetchUsers.pending, (state) => {
-      //   state.isLoading = true;
-      //   state.error = null;
-      // })
-      // .addCase(fetchUsers.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.users = action.payload;
-      //   state.error = null;
-      // })
-      // .addCase(fetchUsers.rejected, (state, action) => {
-      //   state.isLoading = false;
-      //   state.users = [];
-      //   state.error = action.error.message;
-      // });
       .addCase(fetchUsers.pending, (state) => {
         state.isLoading = true;
         state.error = null;
@@ -81,11 +43,6 @@ const userSlice = createSlice({
         state.users = action.payload; // Check if action.payload is the array of users
         state.error = null;
       })
-      // .addCase(fetchUsers.fulfilled, (state, action) => {
-      //   state.isLoading = false;
-      //   state.users = action.payload;
-      //   state.error = null;
-      // })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.isLoading = false;
         state.users = [];
@@ -93,8 +50,8 @@ const userSlice = createSlice({
       });
   },
 });
-// export const selectAllUsers = (state) => state.users.users;
+
+export const  {login} = userSlice.actions
 
   export default userSlice.reducer;
 
-// export default registrationSlice.reducer;

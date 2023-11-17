@@ -14,7 +14,6 @@ const Login = () => {
 
   const handleSubmit = (values) => {
     dispatch(loginUser(values));
-    console.log("login as", values);
   };
 
   useEffect(() => {

@@ -14,38 +14,39 @@ const ProductCard = ({ product }) => {
 
   // const cartItems = useSelector(selectCartItems);
   const cartitems = useSelector((state) => state.cart.items);
-  console.log(cartitems, "amount is:");
-
   useEffect(() => {
-    // Log the updated cartitems after each render
-    console.log(cartitems, "amount from useEffect is:");
+    // Log the updated cartitems after each render;
+
   }, [cartitems]);
 
   const quantityInCart =
-    cartitems.find((item) => item.id === product.id)?.quantity || 0;
+    cartitems.find((item) => item._id === product._id)?.quantity || 0;
+  // cartitems.find((item) => item.id === product.id)?.quantity || 0;
 
-  // const handleAddToCart = (product) => {
-  //   dispatch(addToCart({ item: { id: product.id },quantity: quantityInCart + 1 }));
-  //   // dispatch(addToCart({ item: { id: product.id }, quantity: {cart} }));
-  //   // dispatch(addToCart(product));
-  //   setShowAddRemove(true);
-  // };
   const handleAddToCart = (product) => {
-    // const newQuantity = quantityInCart + 1; // Increment the quantity
-    // dispatch(addToCart({ item: { id: product.id, quantity: quantityInCart + 1 } }));
-    dispatch(addToCart(  {
-      ...product,
-      quantity: 1,
-    },));
+    dispatch(
+      addToCart({
+        ...product,
+        quantity: 1,
+      })
+    );
     setShowAddRemove(true);
   };
   return (
     <div className="bg-white rounded-lg shadow-md p-4 m-2">
-      <img
+      {/* <img
         src={product.thumbnail}
-        alt={product.title}
+        alt="title"
+        // alt={product.title}
+        className="h-40 mx-auto"
+      /> */}
+      <img
+        src={product.imageUrl || ""}
+        // src={product.thumbnail || ""}
+        alt={product.title || ""}
         className="h-40 mx-auto"
       />
+
       <div className=" flex flex-row justify-between pt-4 ">
         <div className="text-center self-center  font-bold text-xl">
           {product.price} USD
@@ -53,18 +54,13 @@ const ProductCard = ({ product }) => {
         {showAddRemove ? (
           <AddRemoveQuantity
             product={product}
-            increaseQuantity={() => dispatch(increaseQuantity(product.id))}
-            decreaseQuantity={() => decreaseQuantity(product.id)}
-            // cart={cart}
+            increaseQuantity={() => dispatch(increaseQuantity(product._id))}
+            decreaseQuantity={() => decreaseQuantity(product._id)}
             quantityInCart={quantityInCart}
           />
         ) : (
           <button
             className="block bg-[#ffffff] text-blue-800 p-2 mt-2"
-            // onClick={() => {
-            //   dispatch(addToCart(product));
-            //   setShowAddRemove(true);
-            // }}
             onClick={() => handleAddToCart(product)}
           >
             Add To Cart

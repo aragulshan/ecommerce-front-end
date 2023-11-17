@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { logout } from "../../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
+import getCurrentUserData from "../../Utils/FetchCurrentUserData";
 
 const Header = () => {
   const dispatch = useDispatch();
@@ -15,7 +16,7 @@ const Header = () => {
   };
 
   const handleLogout = () => {
-    // Dispatch the logout action
+    localStorage.removeItem('userData');
     dispatch(logout());
   };
 
@@ -31,34 +32,11 @@ const Header = () => {
       window.removeEventListener("scroll", handleScroll);
     };
   }, []);
+  const userData = getCurrentUserData();
 
   return (
     <>
-      {/* <div className={`${isSticky ? "fixed top-0 w-full z-20" : ""}`}> */}
-      {/* <div
-        className={`bg-body-tertiary ${
-          isSticky ? "fixed top-0 w-full z-20" : ""
-        }`}
-      >
-        <nav className="bg-[#3d3d3d] h-14 p-4 flex items-center justify-between my-auto">
-          <div className="container mx-auto flex items-center justify-between">
-            <a className="my-auto" href="/">
-              <img
-                src="./images/Rectangle.png"
-                alt="rect"
-                className="w-[116px] h-[20px]"
-              />
-            </a>
-            <p className="text-[#F9F9F9] text-sm ml-4">
-              Download eHisaab now to maintain your business accounts and get
-              online sale orders.
-            </p>
-          </div>
-        </nav>
-      </div> */}
       <div
-        // className={`bg-[#E7E7E7] `}
-        // className={`bg-[#E7E7E7] ${isSticky ? "sticky top-14" : ""}`}
         className={`bg-[#E7E7E7] ${isSticky ? "fixed top-0 w-full z-20" : ""}`}
         style={{ boxShadow: "0px 4px 6px rgba(0, 0, 0, 1)" }}
       >
@@ -66,7 +44,7 @@ const Header = () => {
           <div className="container mx-auto xl:w-[1366px]">
             <div className=" container mx-auto flex flex-row justify-between lg:flex-none ">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full xl:px-[95px]">
-                <a href="/">
+                <a href="/home">
                   <img
                     src="./images/logoMain.png"
                     alt=""
@@ -80,13 +58,12 @@ const Header = () => {
                   } lg:flex lg:items-center lg:w-auto `}
                 >
                   <ul className="lg:flex lg:items-center lg:space-x-5">
-                    {auth.isAuthenticated ? (
+                    {userData ? (
                     <>
                       <li className="mb-2 lg:mb-0">
                         <Link
                           className="text-[#3E8AAD] font-semibold text-lg"
                           to="/home"
-                          // to="/home"
                         >
                           Home
                         </Link>
@@ -99,16 +76,16 @@ const Header = () => {
                           Stores
                         </Link>
                       </li>
-                      <li className="mb-2 lg:mb-0">
+                      {/* <li className="mb-2 lg:mb-0">
                         <Link
                           className="text-[#3E8AAD] font-semibold text-lg"
                           to="/Products"
                         >
                           Products
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
-                        <Link to="">
+                        <Link to="/store">
                           <img
                             src="./images/cart.png"
                             alt=""
@@ -149,7 +126,6 @@ const Header = () => {
           </div>
         </nav>
       </div>
-      {/* </div> */}
     </>
   );
 };

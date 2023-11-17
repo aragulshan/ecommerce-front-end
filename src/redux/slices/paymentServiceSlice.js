@@ -3,12 +3,14 @@ import axios from "axios";
 
 export const sendPayment = createAsyncThunk(
   "payment/sendPayment",
-  async (_, { rejectWithValue }) => {
+  async (cartData, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/create-checkout-session" //replace this with my own api
+        "http://localhost:8080/api/payment/checkout",{
+          "products":cartData
+      } 
       );
-
+      window.location.href = response?.data?.rediretUrl;
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -41,27 +43,3 @@ const paymentSlice = createSlice({
 
 export default paymentSlice.reducer;
 
-// import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-
-// const paymentService = createApi({
-//   reducerPath: "payment",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "http://localhost:5000/api/",
-//   }),
-//   endpoints: (builder) => {
-//     return {
-//       sendPayment: builder.mutation({
-//         query: () => {
-//           return {
-//             url: "/create-checkout-session", //replace this url from the backend api url
-//             method: "POST",
-//           };
-//         },
-//       }),
-//     };
-//   },
-// });
-
-// export const { useSendPaymentMutation } = paymentService;
-
-// export default paymentService;

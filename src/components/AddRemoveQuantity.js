@@ -1,21 +1,17 @@
-import React, { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-// import { updateQuantity } from "../redux/slices/addRemoveSlice";
+import React  from "react";
+import { useDispatch } from "react-redux";
 import { decreaseQuantity, increaseQuantity } from "../redux/slices/addToCart";
 
 const AddRemoveQuantity = ({ product, quantityInCart }) => {
   const dispatch = useDispatch();
-  const [localQuantity, setLocalQuantity] = useState(quantityInCart);
-
+console.log(quantityInCart,'quantityInCart')
   const handleIncrease = () => {
     dispatch(increaseQuantity(product.id));
-    console.log(setLocalQuantity(localQuantity + 1)); // Update the local quantity
   };
 
   const handleDecrease = () => {
-    if (localQuantity > 1) {
+    if (quantityInCart > 1) {
       dispatch(decreaseQuantity(product.id));
-      setLocalQuantity(localQuantity - 1); // Update the local quantity
     }
   };
 
@@ -27,7 +23,7 @@ const AddRemoveQuantity = ({ product, quantityInCart }) => {
         className="w-[16px] h-[16px] m-auto cursor-pointer"
         onClick={handleIncrease}
       />
-      <p className="self-center px-2">{`  ${localQuantity}`}</p>
+      <p className="self-center px-2">{`  ${quantityInCart}`}</p>
       <img
         src="./images/removebtn.svg"
         alt="remove"
