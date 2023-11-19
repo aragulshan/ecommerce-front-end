@@ -2,20 +2,8 @@ import React, { useEffect, useState } from "react";
 import SearchInput from "../../components/SearchInput";
 import styles from "../../App.css";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  searchProducts,
-  selectSearchedProducts,
-  searchByCategory,
-} from "../../redux/slices/productsSlice";
-import { searchByPriceRange } from "../../redux/slices/priceSlice";
-import {
-  fetchProducts,
-  // selectAllProducts,
-} from "../../redux/slices/productsSlice";
+import { searchProducts } from "../../redux/slices/productsSlice";
 import ProductCard from "../../components/ProductCard";
-import AddRemoveQuantity from "../../components/AddRemoveQuantity";
-import Header from "../../components/Header/Header";
-import Footer from "../../components/Footer/Footer";
 import getCurrentUserData from "../../Utils/FetchCurrentUserData";
 
 const Home = (props) => {
@@ -25,45 +13,40 @@ const Home = (props) => {
   const userData = getCurrentUserData();
 
   const [searchQuery, setSearchQuery] = useState("");
-  const [categories, setCategory] = useState("");
-  const [minPrice, setMinPrice] = useState(0);
-  const [maxPrice, setMaxPrice] = useState(0);
-  // const [localProducts, setLocalProducts] = useState(products);
+  const [category, setCategory] = useState("");
   const [localProducts, setLocalProducts] = useState([]);
+  // const [categories, setCategory] = useState("");
+  // const [minPrice, setMinPrice] = useState(0);
+  // const [maxPrice, setMaxPrice] = useState(0);
+  // const [localProducts, setLocalProducts] = useState(products);
 
   const handleProductSearch = (e) => {
     const query = e?.target?.value;
     setSearchQuery(query);
-   
   };
-
-  useEffect(() => {
-    // Dispatch the fetchProducts action
-    dispatch(searchProducts(searchQuery));
-    // dispatch(fetchProducts());
-  }, [searchQuery]);
-
-  useEffect(() => {
-    // Update localProducts once the products state is populated
-    if (products && products.length > 0) {
-      setLocalProducts(products);
-    }
-  }, [products]);
-  
-const productss = useSelector((state)=>state);
 
   const handleCategorySearch = (e) => {
     const category = e.target.value;
     setCategory(category);
-    dispatch(searchByCategory(category));
   };
+
+  // Dispatch searchProducts when either searchQuery or category changes
+  useEffect(() => {
+    dispatch(searchProducts({ searchQuery, category }));
+  }, [searchQuery, category, dispatch]);
+
+  // Update localProducts once the products state is populated
+  useEffect(() => {
+    if (products && products.length > 0) {
+      setLocalProducts(products);
+    }
+  }, [products]);
 
   // const handlePriceSearch = () => {
   //   dispatch(searchByPriceRange(minPrice, maxPrice));
   // };
   return (
     <>
-      {/* <Header /> */}
       <section className="">
         <div className="home-banner" />
         <div className="flex flex-col lg:flex-row justify-between w-auto md:w-[776px] lg:w-[850px] xl:w-[1015px] mx-auto py-12 ">
@@ -76,7 +59,7 @@ const productss = useSelector((state)=>state);
           <SearchInput
             placeholder="Categories"
             showIcon={true}
-            value={categories}
+            value={category}
             onChange={handleCategorySearch}
           />
           {/* <SearchInput

@@ -11,9 +11,8 @@ export const placeOrder = createAsyncThunk(
       );
       return response.data;
     } catch (error) {
-      console.error("Error:", error); // Log the error
-      throw error; // Corrected line
-      // return rejectWithValue(error.response.data);
+      console.error("Error:", error); 
+      throw error; 
     }
   }
 );

@@ -1,7 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Define the async thunk for creating a product
 export const createProduct = createAsyncThunk('product/createProduct', async (productData, { rejectWithValue }) => {
   try {
     // Fetch the category based on the category name
@@ -15,7 +14,7 @@ export const createProduct = createAsyncThunk('product/createProduct', async (pr
     // Update the productData with the categoryId
     const updatedProductData = { ...productData, category: categoryId };
 
-    // Now, make the request to create the product with the updated data
+    // make the request to create the product with the updated data
     const response = await axios.post(
       "http://localhost:8080/api/product/create-product",
       updatedProductData
@@ -27,7 +26,6 @@ export const createProduct = createAsyncThunk('product/createProduct', async (pr
   }
 });
 
-// Create a slice for product creation
 const productCreationSlice = createSlice({
   name: 'productCreation',
   initialState: {
@@ -49,7 +47,7 @@ const productCreationSlice = createSlice({
         } else {
           console.error("Invalid response format:", action.payload);
           state.product = null;
-          state.error = "Invalid response format"; // You can customize this error message
+          state.error = "Invalid response format"; 
         }
       })
       .addCase(createProduct.rejected, (state, action) => {

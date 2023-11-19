@@ -6,13 +6,14 @@ import productsReducer from "./slices/productsSlice";
 import cartReducer from "./slices/addToCart";
 import orderReducer from "./slices/placeOrder";
 import paymentReducer from "./slices/paymentServiceSlice";
-import userReducer from "./slices/userSlice"
-import uploadProductReducer from "./slices/uploadProductSlice"
+import userReducer from "./slices/userSlice";
+import uploadProductReducer from "./slices/uploadProductSlice";
+import productsOrderedUserData from "./slices/saveOrderedUserData";
 
 const store = configureStore({
   reducer: {
     auth: authRecucer,
-    
+
     registration: registrationReducer,
     price: priceReducer,
     products: productsReducer,
@@ -21,6 +22,7 @@ const store = configureStore({
     payment: paymentReducer,
     users: userReducer,
     uploadProducts: uploadProductReducer,
+    productOrderedBy: productsOrderedUserData,
   },
 });
 

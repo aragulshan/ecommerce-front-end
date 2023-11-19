@@ -1,4 +1,3 @@
-// redux/userSlice.js
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
@@ -11,7 +10,7 @@ export const fetchUsers = createAsyncThunk(
         "http://localhost:8080/api/auth/getallusers"
       ); 
       console.log(response.data,'usersss')
-      return response.data; // Assuming that the users are nested under the "users" property
+      return response.data; 
     } catch (error) {
       return rejectWithValue(error.response.data);
     }

@@ -3,13 +3,13 @@ import { Link } from "react-router-dom";
 
 const FailurePage = () => {
   return (
-    <div className="max-w-md mx-auto mt-8 bg-white rounded-lg shadow-md p-8">
+    <div className="max-w-md mx-auto bg-white rounded-lg shadow-md p-8 text-center mt-[8rem]">
       <img
-        src="./images/failed.svg" 
+        src="./images/failed.svg"
         alt="Checkout Failure"
         className="w-full h-auto mb-4 rounded-lg shadow-md"
       />
-      <p className="text-lg font-bold mb-2">Checkout Failed</p>
+      <p className="text-lg font-bold mb-2">Checkout Failed!</p>
       <p className="text-md mb-4">
         Oops! Something went wrong with your checkout. Please try again.
       </p>

@@ -1,8 +1,8 @@
 import * as Yup from 'yup';
 
 const orderSchema = Yup.object().shape({
-  name: Yup.string().required('Full Name is required'),
-  phone: Yup.string()
+  fullName: Yup.string().required('Full Name is required'),
+  contact: Yup.string()
     .matches(/^\d+$/, 'Phone number must only contain digits')
     .required('Phone Number is required'),
   city: Yup.string().required('City is required'),

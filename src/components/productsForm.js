@@ -46,7 +46,10 @@ const ProductForm = () => {
     <div className="container mx-auto">
       <form onSubmit={formik.handleSubmit} className="max-w-md mx-auto">
         <div className="mb-4">
-          <label htmlFor="brand" className="block text-gray-700 font-bold mb-2 text-left">
+          <label
+            htmlFor="brand"
+            className="block text-gray-700 font-bold mb-2 text-left"
+          >
             Brand
           </label>
           <input
@@ -65,7 +68,10 @@ const ProductForm = () => {
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="price" className="block text-gray-700 font-bold mb-2 text-left">
+          <label
+            htmlFor="price"
+            className="block text-gray-700 font-bold mb-2 text-left"
+          >
             Price
           </label>
           <input
@@ -127,7 +133,7 @@ const ProductForm = () => {
               {formik.errors.category}
             </div>
           )}
-        </div> 
+        </div>
         <div className="mb-4">
           <label
             htmlFor="imageUrl"
@@ -143,7 +149,6 @@ const ProductForm = () => {
             onBlur={formik.handleBlur}
             value={formik.values.imageUrl}
             className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-            //   className="w-full border rounded-md py-2 px-3"
           />
           {formik.touched.imageUrl && formik.errors.imageUrl && (
             <div className="text-red-500 text-sm mt-1">
@@ -152,7 +157,10 @@ const ProductForm = () => {
           )}
         </div>
         <div className="mb-4">
-          <label htmlFor="stock" className="block text-gray-700 font-bold mb-2 text-left">
+          <label
+            htmlFor="stock"
+            className="block text-gray-700 font-bold mb-2 text-left"
+          >
             Stock
           </label>
           <input
@@ -170,7 +178,6 @@ const ProductForm = () => {
             </div>
           )}
         </div>
-          
 
         <button
           type="submit"
@@ -184,8 +191,8 @@ const ProductForm = () => {
 };
 
 export default ProductForm;
-       
-        /* Form fields go here 
+
+/* Form fields go here 
         <div className="mb-4">
           <label htmlFor="title" className="block text-gray-700 font-bold mb-2">
             Title
@@ -242,5 +249,3 @@ export default ProductForm;
             </div>
           )}
         </div> */
-
-     

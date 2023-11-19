@@ -9,7 +9,6 @@ import { useSelector } from "react-redux";
 import Home from "../pages/home/Home";
 import StorePage from "../pages/storepage/StorePage";
 import Member from "../pages/member/Member";
-import Footer from "../components/Footer/Footer";
 import Dashboard from "../pages/dashboard/Dashboard";
 import Layout from "../components/UI/Layout";
 import Header from "../components/Header/Header";
@@ -23,12 +22,12 @@ const Navigations = () => {
 
   return (
     <Router>
-        <Header/>
+      <Header />
       <Routes>
-      <Route exact path="/" element={<Member />}/>
-      <Route
+        <Route exact path="/" element={<Member />} />
+        <Route
           path="/home"
-          element={ userData?<Home /> : <Navigate to="/member" />}
+          element={userData ? <Home /> : <Navigate to="/member" />}
         />
         <Route
           path="/"
@@ -48,7 +47,7 @@ const Navigations = () => {
         />
         <Route path="/member" element={<Member />} />
         <Route path="/success" element={<SuccessPage />} />
-        <Route path="/success" element={<FailurePage />} />
+        <Route path="/cancel" element={<FailurePage />} />
         <Route
           path="/home"
           element={
@@ -59,7 +58,7 @@ const Navigations = () => {
         />
         <Route path="/store" element={<StorePage />} />
         <Route path="/dashboard" element={<Dashboard />} />
-      </Routes> 
+      </Routes>
       {/* {userData && <Footer />} */}
     </Router>
   );

@@ -8,13 +8,15 @@ import {
   removeFromCart,
 } from "../../redux/slices/addToCart";
 import orderSchema from "../validation/OrderSchema";
-// import placeOrder from "../../redux/slices/placeOrder";
 import { sendPayment } from "../../redux/slices/paymentServiceSlice";
+import { createOrderedUserProduct } from "../../redux/slices/saveOrderedUserData";
 
 const StorePage = () => {
   const dispatch = useDispatch();
   const [isSubmitSuccess, setIsSubmitSuccess] = useState(false);
   const cartitems = useSelector((state) => state.cart.items);
+  const saveordereduserData = useSelector((state) => state);
+  console.log(saveordereduserData, "ordereddddddddd");
 
   const orderState = useSelector((state) => state.order);
   const isLoading = orderState.isLoading || false;
@@ -23,10 +25,14 @@ const StorePage = () => {
   const isLoadingOrder = orderState.isLoading || false;
   const errorOrder = orderState.error || null;
 
-  const handleSubmit = (values) => {
-    // dispatch(placeOrder(values));
-    // dispatch(sendPayment());
+  const handleSubmit = (values, { resetForm }) => {
+    dispatch(createOrderedUserProduct(values));
     setIsSubmitSuccess(true);
+
+    setTimeout(() => {
+      setIsSubmitSuccess(false);
+      resetForm();
+    }, 3000);
   };
   return (
     <>
@@ -83,8 +89,8 @@ const StorePage = () => {
             <div className="p-8 bg-[#FBFBFB] shadow-xl rounded">
               <Formik
                 initialValues={{
-                  name: "",
-                  phone: "",
+                  fullName: "",
+                  contact: "",
                   city: "",
                   state: "",
                   streetAddress: "",
@@ -95,34 +101,34 @@ const StorePage = () => {
                 <Form className="w-[100%]">
                   <label
                     className="block text-gray-700 text-sm font-bold pt-2 pb-1"
-                    htmlFor="name"
+                    htmlFor="fullName"
                   >
                     Full Name
                   </label>
                   <Field
                     className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                    id="name"
-                    name="name"
+                    id="fullName"
+                    name="fullName"
                   />
                   <ErrorMessage
-                    name="name"
+                    name="fullName"
                     component="div"
                     className="text-red-500 text-sm"
                   />
 
                   <label
                     className="block text-gray-700 text-sm font-bold pt-2 pb-1"
-                    htmlFor="phone"
+                    htmlFor="contact"
                   >
                     Phone Number
                   </label>
                   <Field
                     className="bg-gray-200 text-gray-700 focus:outline-none focus:shadow-outline border border-gray-300 rounded py-2 px-4 block w-full appearance-none"
-                    id="phone"
-                    name="phone"
+                    id="contact"
+                    name="contact"
                   />
                   <ErrorMessage
-                    name="phone"
+                    name="contact"
                     component="div"
                     className="text-red-500 text-sm"
                   />

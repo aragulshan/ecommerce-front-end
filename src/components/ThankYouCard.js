@@ -9,11 +9,8 @@ const ThankYouCard = () => {
         alt="Thank You"
         className="w-full h-auto mb-4 rounded-lg shadow-md"
       />
-      <p className="text-lg font-bold mb-2">Thank You!</p>
-      <p className="text-md mb-4">Keep Shopping!</p>
-      {/* <button className="bg-gray-700 text-white font-bold py-2 px-4  rounded hover:bg-gray-600">
-        Continue Shopping 
-      </button> */}
+      <p className="text-lg font-bold mb-2">Congratulations Checkout Successful!</p>
+      <p className="text-md mb-4">Thank You For Shopping!</p>
       <Link to="/home" className="bg-gray-700 text-white font-bold py-2 px-4  rounded hover:bg-gray-600">
         Continue Shopping
       </Link>

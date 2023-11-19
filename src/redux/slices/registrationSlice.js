@@ -55,4 +55,3 @@ const registrationSlice = createSlice({
 });
 
 export default registrationSlice.reducer;
-

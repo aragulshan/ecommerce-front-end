@@ -11,10 +11,9 @@ const Register = () => {
   const isLoading = registrationState.isLoading || false; // Initialize as false
   const error = registrationState.error || null;
 
-  const handleSubmit = (values) => {
+  const handleSubmit = (values, { resetForm }) => {
     dispatch(register(values));
-    
-    
+    resetForm();
   };
   return (
     <>
@@ -24,7 +23,7 @@ const Register = () => {
           email: "",
           password: "",
           contact: "",
-          role:""
+          role: "",
           // role:"customer"
         }}
         validationSchema={registrationSchema}

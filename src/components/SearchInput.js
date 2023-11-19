@@ -4,12 +4,10 @@ import PropTypes from "prop-types";
 const SearchInput = (props) => {
   return (
     <div className="relative w-full self-center lg:self-end md:w-[16rem] h-10 my-4 md:my-[1rem]">
-    {/* <div className="relative w-full self-center lg:self-end md:w-40 h-10 sm:my-4 md:my-[1rem]"> */}
       <input
         type="text"
-        placeholder={props.placeholder}
+        placeholder={props.placeholder} 
         className="w-[319px] lg:w-[250px] xl:w-[270px] h-full pl-3 pr-10 border border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
-        // className=" w-[319px] md:w-[220px] lg:w-[250px] xl:w-[270px] h-full pl-3 pr-10 border border-gray-300 focus:outline-none focus:ring focus:border-blue-300"
         value={props.value}
         onChange={props.onChange}
       
@@ -19,7 +17,6 @@ const SearchInput = (props) => {
           src="/images/search.svg"
           alt="Search"
           className="w-6 h-6 absolute left-[17rem] md:left-[unset] md:-right-[2.5rem] lg:right-[1rem] top-2/4 transform -translate-y-2/4"
-          // className="w-6 h-6 absolute md:-right-[2.5rem] lg:-right-[5rem] top-2/4 transform -translate-y-2/4"
         />
       )}
     </div>

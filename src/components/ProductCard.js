@@ -16,12 +16,10 @@ const ProductCard = ({ product }) => {
   const cartitems = useSelector((state) => state.cart.items);
   useEffect(() => {
     // Log the updated cartitems after each render;
-
   }, [cartitems]);
 
   const quantityInCart =
     cartitems.find((item) => item._id === product._id)?.quantity || 0;
-  // cartitems.find((item) => item.id === product.id)?.quantity || 0;
 
   const handleAddToCart = (product) => {
     dispatch(
@@ -34,15 +32,8 @@ const ProductCard = ({ product }) => {
   };
   return (
     <div className="bg-white rounded-lg shadow-md p-4 m-2">
-      {/* <img
-        src={product.thumbnail}
-        alt="title"
-        // alt={product.title}
-        className="h-40 mx-auto"
-      /> */}
       <img
         src={product.imageUrl || ""}
-        // src={product.thumbnail || ""}
         alt={product.title || ""}
         className="h-40 mx-auto"
       />
@@ -67,7 +58,7 @@ const ProductCard = ({ product }) => {
           </button>
         )}
       </div>
-      <div className="text-left mt-2 text-gray-500">{product.brand}</div>
+      <div className="text-left mt-2 text-gray-500 ">{product.brand}</div>
     </div>
   );
 };

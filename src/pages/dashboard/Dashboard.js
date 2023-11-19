@@ -1,20 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchProducts, searchProducts,
-  // selectAllProducts,
-} from "../../redux/slices/productsSlice";
+import { searchProducts } from "../../redux/slices/productsSlice";
 import ProductCard from "../../components/ProductCard";
-import Header from "../../components/Header/Header";
 import UserTable from "../../components/UserTable";
-import ProductsForm from "../../components/productsForm"
+import ProductsForm from "../../components/productsForm";
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  // const products = useSelector((state)=>state.products);
   const products = useSelector((state) => state.products.products);
   // const products = useSelector(selectAllProducts);
   const [searchQuery, setSearchQuery] = useState("");
+  const [category, setCategory] = useState("");
   const [localProducts, setLocalProducts] = useState(products);
   const [open, setOpen] = useState(true);
   const [selectedMenuItem, setSelectedMenuItem] = useState("Users");
@@ -29,14 +25,12 @@ const Dashboard = () => {
   const handleMenuItemClick = (title) => {
     setSelectedMenuItem(title);
   };
-  useEffect(() => {
-    // Dispatch the fetchProducts action
-    dispatch(searchProducts(searchQuery));
-    // dispatch(fetchProducts());
-  }, [searchQuery]);
 
   useEffect(() => {
-    // Update localProducts once the products state is populated
+    dispatch(searchProducts({ searchQuery, category }));
+  }, [searchQuery, category, dispatch]);
+
+  useEffect(() => {
     if (products && products.length > 0) {
       setLocalProducts(products);
     }
@@ -96,8 +90,14 @@ const Dashboard = () => {
             ))}
           </ul>
         </div>
-        <div className={`h-[79vh] w-[100%] text-center  p-7  ${open ? "ml-auto w-[77%]" : "mx-auto"}`}>
-          <h1 className="text-2xl text-center font-semibold ">{selectedMenuItem}</h1>
+        <div
+          className={`h-[79vh] w-[100%] text-center  p-7  ${
+            open ? "ml-auto w-[77%]" : "mx-auto"
+          }`}
+        >
+          <h1 className="text-2xl text-center font-semibold ">
+            {selectedMenuItem}
+          </h1>
           {/* {selectedMenuItem === "Dashboard" && "dashboard here"} */}
           {selectedMenuItem === "Users" && <UserTable />}
           {selectedMenuItem === "Products" && localProducts && (
@@ -107,7 +107,6 @@ const Dashboard = () => {
                   return (
                     <div
                       key={product._id}
-                      // key={product._id}
                       className="w-full sm:w-1/2 md:w-1/3 lg:w-[33.3%] px-4 mb-4"
                     >
                       <ProductCard product={product} />
@@ -125,6 +124,5 @@ const Dashboard = () => {
     </>
   );
 };
-
 
 export default Dashboard;

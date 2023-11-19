@@ -1,19 +1,17 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from 'axios';
+import axios from "axios";
 import { login } from "./userSlice";
 
-// Async action creator
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async (credentials, { rejectWithValue,dispatch }) => {
+  async (credentials, { rejectWithValue, dispatch }) => {
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
-        // "http://localhost:8080/auth/login",
         credentials
       );
-      localStorage.setItem('userData', JSON.stringify(response.data));
-dispatch(login(response.data))
+      localStorage.setItem("userData", JSON.stringify(response.data));
+      dispatch(login(response.data));
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response.data);
@@ -21,23 +19,22 @@ dispatch(login(response.data))
   }
 );
 
-// Synchronous action creators
 const authSlice = createSlice({
   name: "auth",
   initialState: {
     user: null,
     isAuthenticated: false,
-    role:null,
+    role: null,
     error: null,
     isLoading: false,
   },
   reducers: {
     logout: (state) => {
-      state.isAuthenticated = false; // Set isAuthenticated to false on logout
+      state.isAuthenticated = false;
       state.role = null;
     },
-    login: (state,action) => {
-      state.user =  action.payload;
+    login: (state, action) => {
+      state.user = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -48,7 +45,7 @@ const authSlice = createSlice({
       .addCase(loginUser.fulfilled, (state, action) => {
         state.isLoading = false;
         state.user = action.payload;
-        state.isAuthenticated = true; // Set isAuthenticated to true on successful login
+        state.isAuthenticated = true; 
         state.role = action.payload.role;
         state.error = null;
       })
@@ -67,6 +64,3 @@ const authSlice = createSlice({
 export const { reducer: authReducer, actions } = authSlice;
 
 export default authReducer;
-
-
-

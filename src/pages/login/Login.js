@@ -1,14 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useEffect } from "react";
-import { useHistory, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { LoginSchema } from "../validation/LoginSchema";
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../redux/slices/authenticationSlice";
-// import { login } from "../../redux/slices/authenticationSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  // const history = useHistory();
   const navigate = useNavigate();
   const { isLoading, error, isAuthenticated, role } = useSelector((state) => state.auth);
 
@@ -19,10 +17,9 @@ const Login = () => {
   useEffect(() => {
     if (isAuthenticated) {
       if (role === 'customer') {
-        navigate('/home'); // Redirect to the customer home page
-        // navigate.push('/home'); // Redirect to the customer home page
+        navigate('/home'); 
       } else if (role === 'admin') {
-        navigate('/dashboard'); // Redirect to the admin dashboard
+        navigate('/dashboard'); 
       }
     }
   }, [isAuthenticated, role, navigate]);
