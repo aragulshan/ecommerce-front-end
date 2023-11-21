@@ -99,7 +99,13 @@ const Dashboard = () => {
             {selectedMenuItem}
           </h1>
           {/* {selectedMenuItem === "Dashboard" && "dashboard here"} */}
-          {selectedMenuItem === "Users" && <UserTable />}
+          {selectedMenuItem === "Users" && (
+            <div
+              className={` ${open ? "w-full" : " w-full container mx-auto px-[95px] "} `}
+            >
+              <UserTable />
+            </div>
+          )}
           {selectedMenuItem === "Products" && localProducts && (
             <div className="flex flex-wrap md:w-[776px] lg:w-[850px] xl:w-[1015px] mx-auto py-12 ">
               {localProducts.length > 0 ? (

@@ -38,7 +38,61 @@ const StorePage = () => {
     <>
       <section className="px-[80px] ">
         <div className="flex flex-col xl:flex-row gap-[2rem] relative top-14 items-center lg:items-start ">
-          <div className=" xl:flex-[1.5] w-[100%] lg:w-[760px] xl:w-[unset] ">
+          <div className="xl:flex-[1.5] w-[100%] lg:w-[760px] xl:w-[unset]">
+            {cartitems.length === 0 ? (
+              <div className="text-center text-gray-500">
+                No items in the cart.
+              </div>
+            ) : (
+              cartitems.map((element) => (
+                <div
+                  className="bg-[#FBFBFB] shadow-xl rounded mb-[2rem] h-[234px]"
+                  key={element._id}
+                >
+                  <div className="py-8 px-10 flex">
+                    <div className="lg:w-[525px] flex">
+                      <img
+                        src={element.imageUrl}
+                        alt=""
+                        className="w-[82.35px] h-[78.35px]"
+                      />
+                      <div className="flex flex-col pl-8">
+                        <p>{element.brand}</p>
+                        <div className="flex flex-row">
+                          <p className="pr-2">{element.price} Rs </p>
+                          <p className="pr-2"> x {element.quantity} </p>
+                          <p>= {element.price * element.quantity} Rs</p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col">
+                      <AddRemoveQuantity
+                        product={element}
+                        increaseQuantity={() =>
+                          dispatch(increaseQuantity(element._id))
+                        }
+                        decreaseQuantity={() =>
+                          dispatch(decreaseQuantity(element._id))
+                        }
+                        quantityInCart={element.quantity}
+                      />
+                      <img
+                        src="./images/delete.svg"
+                        alt="del"
+                        className="w-[16.47px] h-[17.63px] self-center my-[1rem] cursor-pointer"
+                        onClick={() => {
+                          console.log(element, "elementer");
+                          dispatch(removeFromCart(element._id));
+                        }}
+                      />
+                    </div>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
+          {/* <div className=" xl:flex-[1.5] w-[100%] lg:w-[760px] xl:w-[unset] ">
+            
             {cartitems?.map((element) => (
               <div
                 className="bg-[#FBFBFB] shadow-xl rounded mb-[2rem] h-[234px]"
@@ -84,7 +138,7 @@ const StorePage = () => {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
           <div className=" w-[100%] lg:w-[760px] xl:w-[unset] flex-[1.5] xl:flex-1 ">
             <div className="p-8 bg-[#FBFBFB] shadow-xl rounded">
               <Formik

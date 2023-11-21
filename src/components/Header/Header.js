@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 import { logout } from "../../redux/slices/authSlice";
 import { useDispatch, useSelector } from "react-redux";
 import getCurrentUserData from "../../Utils/FetchCurrentUserData";
 
 const Header = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [isMenuOpen, setMenuOpen] = useState(false);
   const [isSticky, setIsSticky] = useState(false);
 
@@ -18,6 +19,7 @@ const Header = () => {
   const handleLogout = () => {
     localStorage.removeItem('userData');
     dispatch(logout());
+    navigate('/member')
   };
 
   useEffect(() => {
@@ -44,13 +46,13 @@ const Header = () => {
           <div className="container mx-auto xl:w-[1366px]">
             <div className=" container mx-auto flex flex-row justify-between lg:flex-none ">
               <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between w-full xl:px-[95px]">
-                <a href="/home">
+                <Link href="/home">
                   <img
                     src="./images/logoMain.png"
-                    alt=""
+                    alt="mainLogo"
                     className=" h-[100px]"
                   />
-                </a>
+                </Link>
 
                 <div
                   className={`${
@@ -84,7 +86,7 @@ const Header = () => {
                           Products
                         </Link>
                       </li> */}
-                      <li>
+                      {/* <li>
                         <Link to="/store">
                           <img
                             src="./images/cart.png"
@@ -92,7 +94,7 @@ const Header = () => {
                             className="w-5 h-5"
                           />
                         </Link>
-                      </li>
+                      </li> */}
                       <li>
                         <button
                           onClick={handleLogout}

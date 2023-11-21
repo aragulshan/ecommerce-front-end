@@ -114,7 +114,7 @@ const Register = () => {
             name="role"
           >
             <option value="customer">Customer</option>
-            <option value="seller">Seller</option>
+            {/* <option value="seller">Seller</option> */}
             <option value="admin">Admin</option>
             {/* Add more roles as needed */}
           </Field>

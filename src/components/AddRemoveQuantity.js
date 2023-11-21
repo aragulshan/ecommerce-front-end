@@ -6,12 +6,14 @@ const AddRemoveQuantity = ({ product, quantityInCart }) => {
   const dispatch = useDispatch();
 console.log(quantityInCart,'quantityInCart')
   const handleIncrease = () => {
-    dispatch(increaseQuantity(product.id));
+    dispatch(increaseQuantity(product._id));
+    // dispatch(increaseQuantity(product.id));
   };
 
   const handleDecrease = () => {
     if (quantityInCart > 1) {
-      dispatch(decreaseQuantity(product.id));
+      dispatch(decreaseQuantity(product._id));
+      // dispatch(decreaseQuantity(product.id));
     }
   };
 

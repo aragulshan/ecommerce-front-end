@@ -13,27 +13,28 @@ const UserTable = () => {
   }, []);
 
   return (
-    <div className="container mx-auto mt-8">
+    <div className="container mx-auto mt-8 h-[70vh]">
       {users?.length === 0 ? (
         <p className="text-center text-gray-600">No Users Found</p>
       ) : (
-        <table className="min-w-full bg-white border border-gray-300">
-          <thead>
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        {/* <table className="min-w-full bg-white border border-gray-300"> */}
+          <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th className="py-2 px-4 border-b">ID</th>
-              <th className="py-2 px-4 border-b">Name</th>
-              <th className="py-2 px-4 border-b">Email</th>
-              <th className="py-2 px-4 border-b">Contact</th>
+              <th scope="col" className="py-2 px-4 border-b">ID</th>
+              <th scope="col" className="py-2 px-4 border-b">Name</th>
+              <th scope="col" className="py-2 px-4 border-b">Email</th>
+              <th scope="col" className="py-2 px-4 border-b">Contact</th>
             </tr>
           </thead>
           <tbody>
             {users && users?.map((user) => {
                 return (
-                  <tr key={user._id}>
-                    <td className="py-2 px-4 border-b">{user._id}</td>
-                    <td className="py-2 px-4 border-b">{user.name}</td>
-                    <td className="py-2 px-4 border-b">{user.email}</td>
-                    <td className="py-2 px-4 border-b">{user.contact}</td>
+                  <tr key={user._id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                    <td className="py-2 px-4 border-b font-medium text-gray-900 whitespace-nowrap dark:text-white">{user._id}</td>
+                    <td className="py-2 px-4 border-b font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.name}</td>
+                    <td className="py-2 px-4 border-b font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.email}</td>
+                    <td className="py-2 px-4 border-b font-medium text-gray-900 whitespace-nowrap dark:text-white">{user.contact}</td>
                   </tr>
                 );
               })}
